@@ -35,6 +35,7 @@ public class SpanContext implements io.opentracing.SpanContext {
 
   private final long traceID;
   private final long spanID;
+  // parent for zipkin compatibility
   private final long parentID;
   private final byte flags;
   private final Map<String, String> baggage;

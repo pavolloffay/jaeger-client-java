@@ -37,6 +37,7 @@ public class Span implements io.opentracing.Span {
   private final Map<String, Object> tags;
   private long durationMicroseconds; // span durationMicroseconds
   private String operationName;
+  private final SpanContext parentContext;
   private final List<Reference> references;
   private SpanContext context;
   private List<LogData> logs;
@@ -49,6 +50,7 @@ public class Span implements io.opentracing.Span {
       long startTimeNanoTicks,
       boolean computeDurationViaNanoTicks,
       Map<String, Object> tags,
+      SpanContext parentContext,
       List<Reference> references) {
     this.tracer = tracer;
     this.operationName = operationName;
@@ -57,7 +59,8 @@ public class Span implements io.opentracing.Span {
     this.startTimeNanoTicks = startTimeNanoTicks;
     this.computeDurationViaNanoTicks = computeDurationViaNanoTicks;
     this.tags = new HashMap<String, Object>();
-    this.references = new ArrayList<Reference>(references);
+    this.parentContext = parentContext;
+    this.references = references == null ? null : new ArrayList<Reference>(references);
 
     for (Map.Entry<String, Object> tag : tags.entrySet()) {
       setTagAsObject(tag.getKey(), tag.getValue());
@@ -80,6 +83,9 @@ public class Span implements io.opentracing.Span {
 
   public List<Reference> getReferences() {
     synchronized (this) {
+      if (references == null) {
+        return Collections.emptyList();
+      }
       return Collections.unmodifiableList(references);
     }
   }
