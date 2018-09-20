@@ -15,9 +15,17 @@
 package io.jaegertracing.internal.samplers.http;
 
 import java.util.List;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class OperationSamplingParameters {
   double defaultSamplingProbability;
   double defaultLowerBoundTracesPerSecond;

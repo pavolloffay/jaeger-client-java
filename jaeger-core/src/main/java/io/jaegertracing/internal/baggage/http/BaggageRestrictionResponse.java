@@ -14,9 +14,17 @@
 
 package io.jaegertracing.internal.baggage.http;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class BaggageRestrictionResponse {
   String baggageKey;
   int maxValueLength;
