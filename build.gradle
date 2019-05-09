@@ -16,6 +16,7 @@ plugins {
     id 'io.codearte.nexus-staging' version '0.20.0'
     id "de.marcphilipp.nexus-publish" version "0.2.0" apply false
     id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'net.researchgate.release' version '2.6.0'
 }
 
 ext.developmentVersion = getProperty('developmentVersion','999-SNAPSHOT')
@@ -44,7 +45,7 @@ allprojects {
     apply plugin: 'jacoco'
 
     group = 'io.jaegertracing'
-    version = getVersionForBuild()
+    version = '0.35.5-SNAPSHOT'
 
     repositories {
         mavenLocal()
@@ -202,4 +203,11 @@ def getVersionForBuild() {
 
 def getProperty(name, defaultValue) {
     project.properties[name] ?: defaultValue
+}
+
+release {
+    git {
+        requireBranch = '/master|simplify-release-create-commits'
+    }
+    failOnUpdateNeeded = false
 }

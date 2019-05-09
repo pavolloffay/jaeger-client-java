@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This script is taken from https://github.com/fsaintjacques/semver-tool
+
 set -o errexit -o nounset -o pipefail
 
 SEMVER_REGEX="^[vV]?(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
