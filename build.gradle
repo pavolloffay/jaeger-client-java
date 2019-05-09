@@ -200,6 +200,6 @@ release {
     git {
         requireBranch = 'master|release-*|simplify-release-create-commits'
     }
-    tagTemplate = "v" + release.tagTemplate
+    tagTemplate = "v" + getProperty("release.releaseVersion")
     failOnCommitNeeded = false
 }
