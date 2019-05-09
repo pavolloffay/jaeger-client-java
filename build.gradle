@@ -199,6 +199,7 @@ def getProperty(name, defaultValue) {
 release {
     git {
         requireBranch = 'master|release-*|simplify-release-create-commits'
+        signTag = true
     }
     tagTemplate = "v" + project.version
 }
