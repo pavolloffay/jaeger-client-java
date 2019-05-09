@@ -48,6 +48,15 @@ allprojects {
     }
 }
 
+def getRepositoryUsername() {
+    return hasProperty('ossrhUsername') ? ossrhUsername : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('ossrhPassword') ? ossrhPassword : ""
+}
+
+
 subprojects {
     apply plugin: 'ru.vyarus.animalsniffer'
     apply plugin: 'com.github.hierynomus.license'
@@ -75,8 +84,8 @@ subprojects {
 //    if (!version.endsWith("SNAPSHOT")) {
         nexusStaging {
             packageGroup = "io.jaegertracing"
-//            username = ossrhUsername
-//            password = ossrhPassword
+            username = getRepositoryUsername()
+            password = getRepositoryPassword()
             // Dealing with error "Wrong number of received repositories in state 'open'" (http://bit.ly/2ybracm)
             numberOfRetries = 50
             delayBetweenRetriesInMillis = 3000
