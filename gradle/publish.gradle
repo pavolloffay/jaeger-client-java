@@ -1,13 +1,5 @@
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
-def getRepositoryUsername() {
-    return hasProperty('ossrhUsername') ? ossrhUsername : ""
-}
-
-def getRepositoryPassword() {
-    return hasProperty('ossrhPassword') ? ossrhPassword : ""
-}
-
 task javadocJar(type: Jar, dependsOn: javadoc) {
     archiveClassifier = 'javadoc'
     from javadoc.destinationDir

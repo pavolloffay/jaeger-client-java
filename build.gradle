@@ -81,7 +81,7 @@ subprojects {
         from sourceSets.main.output
     }
 
-//    if (!version.endsWith("SNAPSHOT")) {
+    if (!version.endsWith("SNAPSHOT")) {
         nexusStaging {
             packageGroup = "io.jaegertracing"
             username = getRepositoryUsername()
@@ -92,7 +92,7 @@ subprojects {
         }
 
         publish.finalizedBy closeAndReleaseRepository
-//    }
+    }
 
     animalsniffer {
         sourceSets = [sourceSets.main]
