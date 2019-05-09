@@ -73,16 +73,16 @@ subprojects {
     }
 
 //    if (!version.endsWith("SNAPSHOT")) {
-//        nexusStaging {
-//            packageGroup = "io.jaegertracing"
+        nexusStaging {
+            packageGroup = "io.jaegertracing"
 //            username = ossrhUsername
 //            password = ossrhPassword
-//            // Dealing with error "Wrong number of received repositories in state 'open'" (http://bit.ly/2ybracm)
-//            numberOfRetries = 50
-//            delayBetweenRetriesInMillis = 3000
-//        }
-//
-//        publish.finalizedBy closeAndReleaseRepository
+            // Dealing with error "Wrong number of received repositories in state 'open'" (http://bit.ly/2ybracm)
+            numberOfRetries = 50
+            delayBetweenRetriesInMillis = 3000
+        }
+
+        publish.finalizedBy closeAndReleaseRepository
 //    }
 
     animalsniffer {
@@ -200,6 +200,7 @@ release {
     git {
         requireBranch = 'master|release-*|simplify-release-create-commits'
     }
+    // default is x.x.x
     tagTemplate = "v" + getProperty("release.releaseVersion")
     failOnCommitNeeded = false
 }
