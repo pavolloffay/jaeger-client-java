@@ -22,7 +22,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = 'io.jaegertracing'
-            version = getVersionForBuild()
+            version = project.version
 
             from components.java
             artifact sourcesJar

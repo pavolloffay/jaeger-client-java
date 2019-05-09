@@ -1,8 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
-import java.util.regex.Pattern
-
 plugins {
     id "org.jruyi.thrift" version "0.4.0"
     id "jacoco"
@@ -18,8 +16,6 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.21.0'
     id 'net.researchgate.release' version '2.6.0'
 }
-
-ext.developmentVersion = getProperty('developmentVersion','999-SNAPSHOT')
 
 ext.opentracingVersion = getProperty('opentracingVersion','0.32.0')
 ext.guavaVersion = getProperty('guavaVersion','18.0')
@@ -45,7 +41,6 @@ allprojects {
     apply plugin: 'jacoco'
 
     group = 'io.jaegertracing'
-    version = '0.35.5-SNAPSHOT'
 
     repositories {
         mavenLocal()
@@ -178,7 +173,7 @@ task codeCoverageReport(type: JacocoReport, group: 'Coverage reports') {
 }
 
 task printVersion {
-    println getVersionForBuild()
+    println project.version
 }
 
 configure(subprojects.findAll {it.name != 'jaeger-thrift'}) {
@@ -197,17 +192,13 @@ configure(subprojects.findAll {it.name != 'jaeger-thrift'}) {
     }
 }
 
-def getVersionForBuild() {
-    return file('version.txt').text.trim()
-}
-
 def getProperty(name, defaultValue) {
     project.properties[name] ?: defaultValue
 }
 
 release {
     git {
-        requireBranch = '/master|simplify-release-create-commits'
+        requireBranch = 'master|release-*|simplify-release-create-commits'
     }
-    failOnUpdateNeeded = false
+    tagTemplate = "v" + project.version
 }
