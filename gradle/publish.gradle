@@ -62,6 +62,18 @@ publishing {
 }
 
 
+//
+//nexusStaging {
+//    packageGroup = "io.jaegertracing"
+//    username = getRepositoryUsername()
+//    password = getRepositoryPassword()
+//    // Dealing with error "Wrong number of received repositories in state 'open'" (http://bit.ly/2ybracm)
+//    numberOfRetries = 50
+//    delayBetweenRetriesInMillis = 3000
+//    finalizedBy closeAndReleaseRepository
+//}
+
+
 nexusPublishing {
     username = getRepositoryUsername()
     password = getRepositoryPassword()

@@ -72,18 +72,18 @@ subprojects {
         from sourceSets.main.output
     }
 
-    if (!version.endsWith("SNAPSHOT")) {
-        nexusStaging {
-            packageGroup = "io.jaegertracing"
-            username = ossrhUsername
-            password = ossrhPassword
-            // Dealing with error "Wrong number of received repositories in state 'open'" (http://bit.ly/2ybracm)
-            numberOfRetries = 50
-            delayBetweenRetriesInMillis = 3000
-        }
-
-        publish.finalizedBy closeAndReleaseRepository
-    }
+//    if (!version.endsWith("SNAPSHOT")) {
+//        nexusStaging {
+//            packageGroup = "io.jaegertracing"
+//            username = ossrhUsername
+//            password = ossrhPassword
+//            // Dealing with error "Wrong number of received repositories in state 'open'" (http://bit.ly/2ybracm)
+//            numberOfRetries = 50
+//            delayBetweenRetriesInMillis = 3000
+//        }
+//
+//        publish.finalizedBy closeAndReleaseRepository
+//    }
 
     animalsniffer {
         sourceSets = [sourceSets.main]
@@ -199,7 +199,7 @@ def getProperty(name, defaultValue) {
 release {
     git {
         requireBranch = 'master|release-*|simplify-release-create-commits'
-        signTag = true
     }
-    tagTemplate = "v" + project.version
+//    tagTemplate = "v" + version
+    failOnCommitNeeded = false
 }
