@@ -33,11 +33,12 @@ cache:
   - "$HOME/.gradle/wrapper/"
 before_install:
 - git remote -v
--  git status
+- git status
+- echo $TRAVIS_TAG
+- echo $TRAVIS_BRANCH
 - ./travis/prepare-signing.sh $encrypted_677f232983c0_key $encrypted_677f232983c0_iv
 
 stages:
-  - name: test
   - name: deploy
     if: NOT (type IN (pull_request))
 
