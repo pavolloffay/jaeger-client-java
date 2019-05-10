@@ -2,17 +2,30 @@
 
 set -o errexit -o nounset -o pipefail
 
-
-setup_git() {
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "Travis CI"
+safe_checkout_master_or_release() {
+  # We need to be on a branch for release:perform to be able to create commits,
+  # and we want that branch to be master or release-X.Y, which has been checked before.
+  # But we also want to make sure that we build and release exactly the tagged version, so we verify that the remote
+  # branch is where our tag is.
+  checkoutBranch=$(echo ${TRAVIS_TAG} | sed 's/.[[:digit:]]\+$//')
+  if ! git ls-remote --exit-code --heads origin "$checkoutBranch" ; then
+    checkoutBranch=master
+  fi
+  git checkout -B "${checkoutBranch}"
+  git fetch origin "${checkoutBranch}":origin/"${checkoutBranch}"
+  commit_local_master="$(git show --pretty='format:%H' ${checkoutBranch})"
+  commit_remote_master="$(git show --pretty='format:%H' origin/${checkoutBranch})"
+  if [ "$commit_local_master" != "$commit_remote_master" ]; then
+    echo "${checkoutBranch} on remote 'origin' has commits since the version under release, aborting"
+    exit 1
+  fi
 }
 
 if [[ "$TRAVIS_TAG" =~ ^release-[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+?$ ]]; then
     echo "We are on release- tag"
     echo "bumping versions and creating vx.x.x tag"
     echo "final artifact will be published in build for the tag"
-    setup_git
+    safe_checkout_master_or_release
     version=$(echo "${TRAVIS_TAG}" | sed 's/^release-//')
     ./gradlew release release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=${version}
 else
