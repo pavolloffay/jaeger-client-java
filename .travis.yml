@@ -28,6 +28,8 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 before_install:
+- git remote -v
+-  git status
 - ./travis/prepare-signing.sh $encrypted_677f232983c0_key $encrypted_677f232983c0_iv
 
 stages:
