@@ -23,7 +23,7 @@ safe_checkout_master_or_release() {
 
 if [[ "$TRAVIS_TAG" =~ ^release-[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+?$ ]]; then
     echo "We are on release- tag"
-    echo "bumping versions and creating vx.x.x tag"
+    echo "bumping versions and creating vX.Y.Z tag"
     echo "final artifact will be published in build for the tag"
     safe_checkout_master_or_release
     version=$(echo "${TRAVIS_TAG}" | sed 's/^release-//')
